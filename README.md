@@ -1,41 +1,66 @@
-# Omniauth::Intercom
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/omniauth/intercom`. To experiment with that code, run `bin/console` for an interactive prompt.
+# OmniAuth Intercom
 
-TODO: Delete this and the text above, and describe your gem
+Intercom OAuth2 Strategy for OmniAuth.
 
-## Installation
+Supports the OAuth 2.0 server-side and client-side flows. Read the [Intercom OAuth docs](https://developers.intercom.io/reference#oauth) for more details:
 
-Add this line to your application's Gemfile:
+## Installing
+
+Add to your `Gemfile`:
 
 ```ruby
 gem 'omniauth-intercom'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install omniauth-intercom
+Then `bundle install`.
 
 ## Usage
 
-TODO: Write usage instructions here
+`OmniAuth::Strategies::Intercom` is simply a Rack middleware. Read the OmniAuth docs for detailed instructions: https://github.com/intridea/omniauth.
 
-## Development
+Here's a quick example, adding the middleware to a Rails app in `config/initializers/omniauth.rb`:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :intercom, ENV['INTERCOM_KEY'], ENV['INTERCOM_SECRET']
+end
+```
+To start the authentication process with Intercom you simply need to access `/auth/intercom` route.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+**Important** You need the `read_admins` permissions to use this middleware.   
+**Important** Your `redirect_url` should be `/auth/intercom/callback`
 
-## Contributing
+## Auth Hash
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/omniauth-intercom.
+Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
+```ruby
+{
+  :provider => 'intercom',
+  :uid => '342324',
+  :info => {
+    :email => 'kevin.antoine@intercom.io',
+    :name => 'Kevin Antoine'
+  },
+  :credentials => {
+    :token => 'dG9rOmNdrWt0ZjtgzzE0MDdfNGM5YVe4MzsmXzFmOGd2MDhiMfJmYTrxOtA=', # OAuth 2.0 access_token, which you may wish to store
+    :expires => false
+  },
+  :extra => {
+    :raw_info => {
+      :name => 'Kevin Antoine',
+      :email => 'kevin.antoine@intercom.io',
+      :type => 'admin',
+      :id => '342324',
+      :app => {
+        :id_code => 'abc123', # Company app_id
+        :type: 'app'
+      }
+      :avatar => {
+        :image_url => "https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491"
+      }
+    }
+  }
+}
+```
