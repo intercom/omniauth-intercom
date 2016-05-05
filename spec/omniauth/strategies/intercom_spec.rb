@@ -33,4 +33,15 @@ describe OmniAuth::Strategies::Intercom do
       expect(subject.raw_info).to eq parsed_response
     end
   end
+  context "#signup" do
+    let(:params) { { 'signup' => '1' } }
+    before do
+      allow(subject).to receive(:request).and_return Object.new()
+      allow(subject.request).to receive(:params).and_return params
+    end
+    it "should change authorize_url to signup" do
+      subject.send(:authorize_url)
+      expect(subject.options.client_options[:authorize_url]).to eq 'https://app.intercom.io/oauth/signup'
+    end
+  end
 end
