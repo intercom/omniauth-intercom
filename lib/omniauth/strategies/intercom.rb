@@ -40,7 +40,17 @@ module OmniAuth
         @raw_info ||= access_token.get('/me').parsed
       end
 
+      def request_phase
+        authorize_url
+        super
+      end
+
       protected
+
+      def authorize_url
+        options.client_options[:authorize_url] += '/signup' if request.params.fetch('signup', false)
+      end
+
       def accept_headers
         access_token.client.connection.headers['Authorization'] = access_token.client.connection.basic_auth(access_token.token, '')
         access_token.client.connection.headers['Accept'] = "application/vnd.intercom.3+json"
