@@ -29,7 +29,7 @@ end
 To start the authentication process with Intercom you simply need to access `/auth/intercom` route.
 You can start the authentication process directly with the signup page by accessing `/auth/intercom?signup=1`
 
-**Important** You need the `read_admins` permissions to use this middleware.   
+**Important** You need the `read_single_admin` permissions to use this middleware.   
 **Important** Your `redirect_url` should be `/auth/intercom/callback`
 
 ## Auth Hash
