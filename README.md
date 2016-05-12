@@ -56,7 +56,8 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
       :id => '342324',
       :app => {
         :id_code => 'abc123', # Company app_id
-        :type: 'app'
+        :type: 'app',
+        secure: true # Secure mode enabled for this app
       }
       :avatar => {
         :image_url => "https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491"

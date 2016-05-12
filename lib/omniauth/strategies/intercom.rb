@@ -9,7 +9,6 @@ module OmniAuth
       # initializing your consumer from the OAuth gem.
       option :client_options, {
         :site => 'https://api.intercom.io',
-        # :site => 'http://localhost:4000',
         :authorize_url => 'https://app.intercom.io/oauth',
         :token_url => 'https://api.intercom.io/auth/eagle/token'
       }
