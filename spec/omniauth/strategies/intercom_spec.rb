@@ -2,13 +2,12 @@
 require 'spec_helper'
 
 describe OmniAuth::Strategies::Intercom do
-
-  let(:access_token) { stub('AccessToken', :options => {})}
+  let(:access_token) { double('AccessToken', :options => {}) }
   let(:token) { 'some-token' }
   let(:parsed_response) { JSON.parse({ :email => 'kevin.antoine@intercom.io', :name => 'Kevin Antoine', :avatar => { :image_url => 'https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491' } }.to_json) }
-  let(:response) { stub('Response', :parsed => parsed_response) }
-  let(:client) { stub('Client') }
-  let(:connection) { stub('Connection') }
+  let(:response) { double('Response', :parsed => parsed_response) }
+  let(:client) { double('Client') }
+  let(:connection) { double('Connection') }
   let(:headers) { {} }
   let(:options) { {} }
 
