@@ -1,4 +1,6 @@
 require 'omniauth-oauth2'
+require 'uri'
+
 module OmniAuth
   module Strategies
     class Intercom < OmniAuth::Strategies::OAuth2
@@ -36,8 +38,7 @@ module OmniAuth
       end
 
       def request_phase
-        options.client_options[:authorize_url] += '/signup' if request.params.fetch('signup', false)
-
+        prepopulate_signup_fields_form if request.params.fetch('signup', false)
         super
       end
 
@@ -46,6 +47,20 @@ module OmniAuth
       def accept_headers
         access_token.client.connection.headers['Authorization'] = access_token.client.connection.basic_auth(access_token.token, '')
         access_token.client.connection.headers['Accept'] = "application/vnd.intercom.3+json"
+      end
+
+      def prepopulate_signup_fields_form
+        options.client_options[:authorize_url] += '/signup'
+        signup_hash = signup_fields_hash
+        options.client_options[:authorize_url] += '?' + signup_hash.map{|k,v| [CGI.escape(k.to_s), "=", CGI.escape(v.to_s)]}.map(&:join).join("&") unless signup_hash.empty?
+      end
+
+      def signup_fields_hash
+        hash = {}
+        ['name', 'email', 'app_name'].each do |field_name|
+          hash[field_name] = request.params.fetch(field_name) if request.params.fetch(field_name, false)
+        end
+        return hash
       end
 
     end

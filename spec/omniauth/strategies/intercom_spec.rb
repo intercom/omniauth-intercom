@@ -65,19 +65,32 @@ describe OmniAuth::Strategies::Intercom do
   end
 
   context 'when using signup' do
-    let(:params) { { 'signup' => '1' } }
 
     before do
       allow(subject.request).to receive(:params).and_return params
     end
 
-    context 'when the request phase starts' do
+    context 'when the request phase starts with signup params provided' do
+      let(:params) { { 'signup' => '1' } }
+
       before do
         subject.request_phase rescue nil
       end
 
-      it 'changes the authorize_url to signup' do
+      it 'changes the authorize_url to signup url' do
         expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.io/oauth/signup')
+      end
+    end
+
+    context 'when the request phase starts with signup params and fields values provided' do
+      let(:params) { { 'signup' => '1', 'name' => 'Test Testovich', 'email' => 'test@testovichmail.com', 'app_name' => 'Testovich App' } }
+
+      before do
+        subject.request_phase rescue nil
+      end
+
+      it 'prepopulate oauth form with those values' do
+        expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.io/oauth/signup?name=Test+Testovich&email=test%40testovichmail.com&app_name=Testovich+App')
       end
     end
   end
