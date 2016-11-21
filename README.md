@@ -117,3 +117,9 @@ Create a `views/home/intercom_callback.html.erb` file ( if your callback route i
 ### Example application
 
 [testapp-intercom-omniauth](https://github.com/Skaelv/testapp-intercom-omniauth) is a simple application implementing the authentication process with Intercom with a popup display.
+
+## Troubleshooting
+
+#### omniauth-oauth2 dependency in v0.1.4
+
+From v0.1.4 we have defined our `omniauth-oauth2` dependency to allow any version from 1.2 on. If you relied on our Gemspec version config for `omniauth-oauth2` you can simply add `gem 'omniauth-oauth2', '~> 1.2'` to your Gemfile. This will ensure your `omniauth-oauth2` version is `1.2.x` again.

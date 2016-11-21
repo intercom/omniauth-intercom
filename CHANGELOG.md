@@ -24,6 +24,10 @@ Features:
 
 ## 0.1.4 (2016-11-21)
 
-    Features:
+Features:
 
-        - update to Gemspec to prevent omniauth-oauth2 version clash (@travega)
+    - update to Gemspec to prevent omniauth-oauth2 version clash. If you relied on the omniauth-oauth2 gemspec dependency version to be 1.2.x for other parts of your app you can add:
+
+          gem 'omniauth-oauth2', '~> 1.2'
+
+      to your Gemfile to set the version back to 1.2.x (@travega)
