@@ -21,3 +21,9 @@ Features:
 Features:
 
     - allow to pre-populate oauth signup form fields (name, email, app_name) (@Skaelv)
+
+## 0.1.4 (2016-11-21)
+
+    Features:
+
+        - update to Gemspec to prevent omniauth-oauth2 version clash (@travega)
