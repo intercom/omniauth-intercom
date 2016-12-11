@@ -56,7 +56,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
       :app => {
         :id_code => 'abc123', # Company app_id
         :type => 'app',
-        :secure => true # Secure mode enabled for this app
+        :secure => true, # Secure mode enabled for this app
 	:timezone => "Dublin",
 	:name => "ProjectMap"
       },
