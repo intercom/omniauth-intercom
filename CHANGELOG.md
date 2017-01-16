@@ -31,3 +31,8 @@ Features:
           gem 'omniauth-oauth2', '~> 1.2'
 
       to your Gemfile to set the version back to 1.2.x (@travega)
+
+## 0.1.5 (2017-01-16)
+
+Features:
+    - add email_verified check 
