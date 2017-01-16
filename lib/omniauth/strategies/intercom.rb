@@ -34,7 +34,13 @@ module OmniAuth
       def raw_info
         accept_headers
         access_token.options[:mode] = :body
-        @raw_info ||= access_token.get('/me').parsed
+        @raw_info ||= begin
+          parsed = access_token.get('/me').parsed
+          if parsed['email_verified'] != true
+            return {}
+          end
+         parsed
+        end
       end
 
       def request_phase
