@@ -11,6 +11,7 @@ git checkout master`
 ```shell
 git pull origin master
 ```
++ Create a new branch
 
 + Update the version number in `omniauth-intercom/lib/intercom-ruby-app.rb`
 
@@ -18,7 +19,9 @@ git pull origin master
 
 + Add a CHANGELOG entry
 
-+ Commit to master with an explicit message : "Bump to vX.Y.Z"
++ Commit to new branch with an explicit message : "Bump to vX.Y.Z"
+
++ Merge the new branch to master and switch to master locally
 
 + Tag the new release :
 
