@@ -9,7 +9,7 @@ Supports the OAuth 2.0 server-side and client-side flows. Read the [Intercom OAu
 Add to your `Gemfile`:
 
 ```ruby
-gem 'omniauth-intercom', '~> 0.1.4'
+gem 'omniauth-intercom', '~> 0.1.5'
 ```
 
 Then `bundle install`.
