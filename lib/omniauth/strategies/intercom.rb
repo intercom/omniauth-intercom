@@ -53,6 +53,7 @@ module OmniAuth
       def accept_headers
         access_token.client.connection.headers['Authorization'] = access_token.client.connection.basic_auth(access_token.token, '')
         access_token.client.connection.headers['Accept'] = "application/vnd.intercom.3+json"
+        access_token.client.connection.headers['User-Agent'] = "omniauth-intercom/#{::OmniAuth::Intercom::VERSION}"
       end
 
       def prepopulate_signup_fields_form
