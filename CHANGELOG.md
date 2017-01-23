@@ -36,3 +36,8 @@ Features:
 
 Features:
     - add email_verified check 
+    
+## 0.1.6 (2017-01-20)
+
+Features:
+    - add custom user agent 

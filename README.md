@@ -9,7 +9,7 @@ Supports the OAuth 2.0 server-side and client-side flows. Read the [Intercom OAu
 Add to your `Gemfile`:
 
 ```ruby
-gem 'omniauth-intercom', '~> 0.1.5'
+gem 'omniauth-intercom', '~> 0.1.6'
 ```
 
 Then `bundle install`.
@@ -53,6 +53,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
       :email => 'kevin.antoine@intercom.io',
       :type => 'admin',
       :id => '342324',
+      :email_verified => true,
       :app => {
         :id_code => 'abc123', # Company app_id
         :type => 'app',
