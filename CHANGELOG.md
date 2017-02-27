@@ -41,3 +41,8 @@ Features:
 
 Features:
     - add custom user agent 
+    
+## 0.1.7 (2017-02-27)
+
+Features:
+    - add verify email config
