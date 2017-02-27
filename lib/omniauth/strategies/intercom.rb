@@ -12,6 +12,8 @@ module OmniAuth
         :token_url => 'https://api.intercom.io/auth/eagle/token'
       }
 
+      option :verify_email, true
+
       uid { raw_info['id'] }
 
       info do
@@ -36,7 +38,7 @@ module OmniAuth
         access_token.options[:mode] = :body
         @raw_info ||= begin
           parsed = access_token.get('/me').parsed
-          if parsed['email_verified'] != true
+          if options.verify_email && parsed['email_verified'] != true
             return {}
           end
          parsed

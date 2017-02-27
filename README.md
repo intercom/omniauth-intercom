@@ -31,6 +31,15 @@ You can start the authentication process directly with the signup page by access
 **Important** You need the `read_single_admin` permissions to use this middleware.   
 **Important** Your `redirect_url` should be `/auth/intercom/callback`
 
+By default Intercom strategy rejects users with unverified email addresses. `info` and `raw_info` in `request.env['omniauth.auth']` will not be populated in that case.
+To disable this check add `verify_email: false` to your config:
+
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :intercom, ENV['INTERCOM_KEY'], ENV['INTERCOM_SECRET'], verify_email: false
+end
+```
+
 ## Auth Hash
 
 Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:

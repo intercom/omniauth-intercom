@@ -110,24 +110,54 @@ describe OmniAuth::Strategies::Intercom do
       allow(response).to receive(:parsed).and_return parsed_response
     end
 
-    context '#raw_info' do
-      it 'returns blank raw_info' do
-        expect(subject.raw_info).to eq({})
+    context 'with verify_email option' do
+      context '#raw_info' do
+        it 'returns blank raw_info' do
+          expect(subject.raw_info).to eq({})
+        end
+      end
+
+      context '#info' do
+        it 'should not have the name' do
+          expect(subject.info[:name]).to eq(nil)
+        end
+
+        it 'should not have the email' do
+          expect(subject.info[:email]).to eq(nil)
+        end
+
+        it 'should not have the image' do
+          expect(subject.info[:image]).to eq(nil)
+        end
       end
     end
 
-    context '#info' do
-      it 'should not have the name' do
-        expect(subject.info[:name]).to eq(nil)
+    context 'with verify_email option set to false' do
+
+      before do
+        subject.options.verify_email = false
       end
 
-      it 'should not have the email' do
-        expect(subject.info[:email]).to eq(nil)
+      context '#raw_info' do
+        it 'returns blank raw_info' do
+          expect(subject.raw_info).to eq(parsed_response)
+        end
       end
 
-      it 'should not have the image' do
-        expect(subject.info[:image]).to eq(nil)
+      context '#info' do
+        it 'should not have the name' do
+          expect(subject.info[:name]).to eq('Kevin Antoine')
+        end
+
+        it 'should not have the email' do
+          expect(subject.info[:email]).to eq('kevin.antoine@intercom.io')
+        end
+
+        it 'should not have the image' do
+          expect(subject.info[:image]).to eq('https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491')
+        end
       end
     end
+
   end
 end
