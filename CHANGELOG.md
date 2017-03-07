@@ -51,3 +51,8 @@ Features:
 
 Features:
     - update config to intercom.com domain
+    
+## 0.1.9 (2017-03-07)
+
+Features:
+    - fix site config
