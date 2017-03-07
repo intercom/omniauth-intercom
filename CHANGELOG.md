@@ -46,3 +46,8 @@ Features:
 
 Features:
     - add verify email config
+    
+## 0.1.8 (2017-03-07)
+
+Features:
+    - update config to intercom.com domain
