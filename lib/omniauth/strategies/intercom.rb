@@ -7,8 +7,7 @@ module OmniAuth
       option :name, 'intercom'
 
       option :client_options, {
-        :site => 'https://api.intercom.io',
-        :authorize_url => 'https://app.intercom.io/oauth',
+        :authorize_url => 'https://app.intercom.com/oauth',
         :token_url => 'https://api.intercom.io/auth/eagle/token'
       }
 

@@ -83,7 +83,7 @@ describe OmniAuth::Strategies::Intercom do
         end
 
         it 'changes the authorize_url to signup url' do
-          expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.io/oauth/signup')
+          expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.com/oauth/signup')
         end
       end
 
@@ -95,7 +95,7 @@ describe OmniAuth::Strategies::Intercom do
         end
 
         it 'prepopulate oauth form with those values' do
-          expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.io/oauth/signup?name=Test+Testovich&email=test%40testovichmail.com&app_name=Testovich+App')
+          expect(subject.options.client_options[:authorize_url]).to eq('https://app.intercom.com/oauth/signup?name=Test+Testovich&email=test%40testovichmail.com&app_name=Testovich+App')
         end
       end
     end
