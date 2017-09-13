@@ -36,7 +36,7 @@ module OmniAuth
 
       def raw_info
         headers = { 'Accept' => 'application/vnd.intercom.3+json' }
-        
+
         @raw_info ||= access_token.get('/me', headers: headers).parsed.tap do |hash|
           if options.verify_email && hash['email_verified'] != true
             hash.clear
@@ -45,24 +45,23 @@ module OmniAuth
       end
 
       def request_phase
-        prepare_request_phase
+        prepare_request_phase_for_signup
         super
       end
 
-      protected
+    protected
 
-      def prepare_request_phase
+      def prepare_request_phase_for_signup
         return unless request.params['signup']
-
         options.client_options[:authorize_url] += '/signup'
-        authorize_url_params = build_authorize_url_params(request.params)
 
-        return if authorize_url_params.empty?
+        signup_params = build_signup_params(request.params)
+        return if signup_params.empty?
 
-        options.client_options[:authorize_url] += "?#{URI.encode_www_form(authorize_url_params)}"
+        options.client_options[:authorize_url] += "?#{URI.encode_www_form(signup_params)}"
       end
 
-      def build_authorize_url_params(params)
+      def build_signup_params(params)
         %w[name email app_name].each_with_object({}) do |field_name, hash|
           hash.merge(field_name => params[field_name]) if params[field_name]
         end
