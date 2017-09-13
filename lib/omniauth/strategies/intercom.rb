@@ -7,9 +7,9 @@ module OmniAuth
       option :name, 'intercom'
 
       option :client_options, {
-        :site => 'https://api.intercom.io',
-        :authorize_url => 'https://app.intercom.com/oauth',
-        :token_url => 'https://api.intercom.io/auth/eagle/token'
+        site:          'https://api.intercom.io',
+        token_url:     'https://api.intercom.io/auth/eagle/token',
+        authorize_url: 'https://app.intercom.com/oauth'
       }
 
       option :verify_email, true
@@ -17,61 +17,56 @@ module OmniAuth
       uid { raw_info['id'] }
 
       info do
-        {
-          :name => raw_info['name'],
-          :email => raw_info['email'],
-        }.tap do |info|
-          avatar = raw_info['avatar'] && raw_info['avatar']['image_url']
+        return {} if raw_info.empty?
 
-          info[:image] = avatar if avatar
-        end
+        {
+          name:      raw_info['name'],
+          email:     raw_info['email'],
+          verfied:   raw_info['email_verified'],
+          image:     raw_info['avatar']['image_url'],
+          time_zone: raw_info['app']['timezone']
+        }
       end
 
       extra do
         {
-          :raw_info => raw_info
+          raw_info: raw_info
         }
       end
 
       def raw_info
-        accept_headers
-        access_token.options[:mode] = :body
-        @raw_info ||= begin
-          parsed = access_token.get('/me').parsed
-          if options.verify_email && parsed['email_verified'] != true
-            return {}
+        headers = { 'Accept' => 'application/vnd.intercom.3+json' }
+        
+        @raw_info ||= access_token.get('/me', headers: headers).parsed.tap do |hash|
+          if options.verify_email && hash['email_verified'] != true
+            hash.clear
           end
-         parsed
         end
       end
 
       def request_phase
-        prepopulate_signup_fields_form if request.params.fetch('signup', false)
+        prepare_request_phase
         super
       end
 
       protected
 
-      def accept_headers
-        access_token.client.connection.headers['Authorization'] = access_token.client.connection.basic_auth(access_token.token, '')
-        access_token.client.connection.headers['Accept'] = "application/vnd.intercom.3+json"
-        access_token.client.connection.headers['User-Agent'] = "omniauth-intercom/#{::OmniAuth::Intercom::VERSION}"
-      end
+      def prepare_request_phase
+        return unless request.params['signup']
 
-      def prepopulate_signup_fields_form
         options.client_options[:authorize_url] += '/signup'
-        signup_hash = signup_fields_hash
-        options.client_options[:authorize_url] += '?' + signup_hash.map{|k,v| [CGI.escape(k.to_s), "=", CGI.escape(v.to_s)]}.map(&:join).join("&") unless signup_hash.empty?
+        authorize_url_params = build_authorize_url_params(request.params)
+
+        return if authorize_url_params.empty?
+
+        options.client_options[:authorize_url] += "?#{URI.encode_www_form(authorize_url_params)}"
       end
 
-      def signup_fields_hash
-        hash = {}
-        ['name', 'email', 'app_name'].each do |field_name|
-          hash[field_name] = request.params.fetch(field_name) if request.params.fetch(field_name, false)
+      def build_authorize_url_params(params)
+        %w[name email app_name].each_with_object({}) do |field_name, hash|
+          hash.merge(field_name => params[field_name]) if params[field_name]
         end
-        return hash
       end
-
     end
   end
 end
