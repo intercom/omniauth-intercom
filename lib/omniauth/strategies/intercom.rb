@@ -55,19 +55,16 @@ module OmniAuth
     protected
 
       def prepare_request_phase_for_signup
-        puts "request.params: #{request.params.inspect}"
         return unless request.params['signup']
         options.client_options[:authorize_url] += '/signup'
 
         signup_params = build_signup_params(request.params)
-        puts "signup_params: #{signup_params.inspect}"
         return if signup_params.empty?
 
         options.client_options[:authorize_url] += "?#{URI.encode_www_form(signup_params)}"
       end
 
       def build_signup_params(params)
-        puts "params: #{params.inspect}"
         %w[name email app_name].each_with_object({}) do |field_name, hash|
           hash.merge!(field_name => params[field_name]) if params[field_name]
         end
