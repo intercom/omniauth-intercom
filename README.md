@@ -16,6 +16,9 @@ Then `bundle install`.
 
 ## Usage
 
+**Important** For this to work you need to select the `read_single_admin` permissions in your OAuth application to use this middleware.   
+**Important** You will also need to ensure your `redirect_url` is set to `/auth/intercom/callback`
+
 `OmniAuth::Strategies::Intercom` is simply a Rack middleware. Read the OmniAuth docs for detailed instructions: https://github.com/intridea/omniauth.
 
 Here's a quick example, adding the middleware to a Rails app in `config/initializers/omniauth.rb`:
@@ -28,8 +31,8 @@ end
 To start the authentication process with Intercom you simply need to access `/auth/intercom` route.
 You can start the authentication process directly with the signup page by accessing `/auth/intercom?signup=1`
 
-**Important** You need the `read_single_admin` permissions to use this middleware.   
-**Important** Your `redirect_url` should be `/auth/intercom/callback`
+**Important** Reminder: As noted earlier you need the `read_single_admin` permissions to use this middleware.   
+**Important** Reminder: As noted earlier your `redirect_url` should be `/auth/intercom/callback`
 
 By default Intercom strategy rejects users with unverified email addresses. `info` and `raw_info` in `request.env['omniauth.auth']` will not be populated in that case.
 To disable this check add `verify_email: false` to your config:
