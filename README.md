@@ -52,8 +52,11 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
   :provider => 'intercom',
   :uid => '342324',
   :info => {
+    :name => 'Kevin Antoine',
     :email => 'kevin.antoine@intercom.io',
-    :name => 'Kevin Antoine'
+    :verified => true,
+    :image => 'https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491',
+    :time_zone => 'Dublin'
   },
   :credentials => {
     :token => 'dG9rOmNdrWt0ZjtgzzE0MDdfNGM5YVe4MzsmXzFmOGd2MDhiMfJmYTrxOtA=', # OAuth 2.0 access_token, which you may wish to store
@@ -70,11 +73,11 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
         :id_code => 'abc123', # Company app_id
         :type => 'app',
         :secure => true, # Secure mode enabled for this app
-        :timezone => "Dublin",
-        :name => "ProjectMap"
+        :timezone => 'Dublin',
+        :name => 'ProjectMap'
       },
       :avatar => {
-        :image_url => "https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491"
+        :image_url => 'https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491'
       }
     }
   }

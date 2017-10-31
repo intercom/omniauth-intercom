@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe OmniAuth::Strategies::Intercom do
   let(:access_token) { double('AccessToken', options: {}) }
+  let(:access_token_headers) { {headers: {"Accept" => "application/vnd.intercom.3+json"}} }
   let(:token) { 'some-token' }
   let(:client) { double('Client') }
   let(:connection) { double('Connection') }
@@ -29,13 +30,13 @@ describe OmniAuth::Strategies::Intercom do
     let(:response) { double('Response', :parsed => parsed_response) }
 
     before do
-      allow(access_token).to receive(:get).with('/me').and_return response
+      allow(access_token).to receive(:get).with('/me', access_token_headers).and_return response
       allow(response).to receive(:parsed).and_return parsed_response
     end
 
     context '#raw_info' do
       it 'request "me"' do
-        expect(access_token).to receive(:get).with('/me').and_return response
+        expect(access_token).to receive(:get).with('/me', access_token_headers).and_return response
 
         subject.raw_info
       end
@@ -106,7 +107,7 @@ describe OmniAuth::Strategies::Intercom do
     let(:response) { double('Response', :parsed => parsed_response) }
 
     before do
-      allow(access_token).to receive(:get).with('/me').and_return response
+      allow(access_token).to receive(:get).with('/me', access_token_headers).and_return response
       allow(response).to receive(:parsed).and_return parsed_response
     end
 
