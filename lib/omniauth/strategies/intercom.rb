@@ -20,6 +20,7 @@ module OmniAuth
         {
           :name => raw_info['name'],
           :email => raw_info['email'],
+          :workspace_id => raw_info['app']['id_code']
         }.tap do |info|
           avatar = raw_info['avatar'] && raw_info['avatar']['image_url']
 
