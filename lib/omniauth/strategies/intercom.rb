@@ -20,11 +20,12 @@ module OmniAuth
         {
           :name => raw_info['name'],
           :email => raw_info['email'],
-          :workspace_id => raw_info['app']['id_code']
         }.tap do |info|
           avatar = raw_info['avatar'] && raw_info['avatar']['image_url']
-
           info[:image] = avatar if avatar
+
+          workspace_id = raw_info['app'] && raw_info['app']['id_code']
+          info[:workspace_id] = workspace_id if workspace_id
         end
       end
 
