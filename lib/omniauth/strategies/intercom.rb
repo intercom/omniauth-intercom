@@ -1,5 +1,5 @@
 require 'omniauth-oauth2'
-require 'uri'
+require 'base64'
 
 module OmniAuth
   module Strategies
@@ -53,9 +53,13 @@ module OmniAuth
       protected
 
       def accept_headers
-        access_token.client.connection.headers['Authorization'] = access_token.client.connection.basic_auth(access_token.token, '')
+        access_token.client.connection.headers['Authorization'] = "Basic #{basic_auth_credentials}"
         access_token.client.connection.headers['Accept'] = "application/vnd.intercom.3+json"
         access_token.client.connection.headers['User-Agent'] = "omniauth-intercom/#{::OmniAuth::Intercom::VERSION}"
+      end
+
+      def basic_auth_credentials
+        Base64.encode64("#{access_token.token}:").delete("\n")
       end
 
       def prepopulate_signup_fields_form

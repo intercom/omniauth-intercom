@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe OmniAuth::Strategies::Intercom do
-  let(:access_token) { double('AccessToken', options: {}) }
+  let(:access_token) { instance_double(OAuth2::AccessToken) }
   let(:token) { 'some-token' }
-  let(:client) { double('Client') }
-  let(:connection) { double('Connection') }
+  let(:client) { instance_double(OAuth2::Client) }
+  let(:connection) { instance_double(Faraday::Connection) }
   let(:headers) { {} }
   let(:options) { {} }
 
@@ -21,12 +21,11 @@ describe OmniAuth::Strategies::Intercom do
 
     allow(client).to receive(:connection).and_return connection
     allow(connection).to receive(:headers).and_return headers
-    allow(connection).to receive(:basic_auth).and_return "Bearer #{token}"
   end
 
   context 'with verified email' do
     let(:parsed_response) { JSON.parse({email: 'kevin.antoine@intercom.io', name: 'Kevin Antoine', avatar: {image_url: 'https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491'}, email_verified: true}.to_json) }
-    let(:response) { double('Response', :parsed => parsed_response) }
+    let(:response) { instance_double(OAuth2::Response, :parsed => parsed_response) }
 
     before do
       allow(access_token).to receive(:get).with('/me').and_return response
@@ -103,7 +102,7 @@ describe OmniAuth::Strategies::Intercom do
 
   context 'with unverified email' do
     let(:parsed_response) { JSON.parse({email: 'kevin.antoine@intercom.io', name: 'Kevin Antoine', avatar: {image_url: 'https://static.intercomassets.com/avatars/343616/square_128/me.jpg?1454165491'}, email_verified: false}.to_json) }
-    let(:response) { double('Response', :parsed => parsed_response) }
+    let(:response) { instance_double(OAuth2::Response, :parsed => parsed_response) }
 
     before do
       allow(access_token).to receive(:get).with('/me').and_return response
