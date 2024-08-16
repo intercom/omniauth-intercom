@@ -56,3 +56,9 @@ Features:
 
 Features:
     - fix site config
+
+## 0.1.10 (2024-08-16)
+
+Features:
+
+  - Fix compatibility with Faraday 2.0
