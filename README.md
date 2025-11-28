@@ -126,11 +126,6 @@ Create a `views/home/intercom_callback.html.erb` file ( if your callback route i
 </html>
 ```
 
-
-### Example application
-
-[testapp-intercom-omniauth](https://github.com/Skaelv/testapp-intercom-omniauth) is a simple application implementing the authentication process with Intercom with a popup display.
-
 ## Troubleshooting
 
 #### omniauth-oauth2 dependency in v0.1.4
