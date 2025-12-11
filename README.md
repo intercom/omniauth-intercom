@@ -56,7 +56,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
     :name => 'Kevin Antoine'
   },
   :credentials => {
-    :token => 'dG9rOmNdrWt0ZjtgzzE0MDdfNGM5YVe4MzsmXzFmOGd2MDhiMfJmYTrxOtA=', # OAuth 2.0 access_token, which you may wish to store
+    :token => '<redacted>', # OAuth 2.0 access_token, which you may wish to store
     :expires => false
   },
   :extra => {
